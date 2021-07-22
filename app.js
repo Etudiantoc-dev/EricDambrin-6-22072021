@@ -1,23 +1,35 @@
-const express = require('express');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://Eric:<Dbmongoose>@cluster0.1da6l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+  const express = require('express');
 const app = express();
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+  });
 
-app.use((req, res, next) =>{//le premier enregistre « Requête reçue ! » dans la console et passe l'exécution ;
- console.log('requête reçu !');
- next();
+app.use("/api/sauces", (req, res, next) =>{
+    const sauces = [
+        {
+        id: '1',
+        userId:'',
+        name:'',
+        manufacturer:'',
+        descripttion:'',
+        mainPepper:'',
+        imageUrl:'',
+        },
+        
+    ];
+    res.status(200).json(sauces);
 });
 
-app.use((req, res, next)=>{//le deuxième ajoute un code d'état 201 à la réponse et passe l'exécution ;
-    res.status(201);
-    next();
-});
 
-
-app.use((req, res, next) =>{//le troisième envoie la réponse JSON et passe l'exécution ;
-    res.json({message : 'Votre requête a bien été reçue '});
-    next();
-})
-app.use((req,res)=>{//le dernier élément de middleware enregistre « Réponse envoyée avec succès ! » dans la console.
-    console.log('Réponse envoyé avec succés !')
-})
 
 module.exports = app;
