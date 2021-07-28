@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');// Pour gérer la demande post en impo
 const mongoose = require('mongoose');
 
 const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user');
 
 
 mongoose.connect('mongodb+srv://Eric:Dbmongoose@cluster0.1da6l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -24,7 +25,7 @@ app.use((req, res, next) => {//Pour éviter l'erreur CORS = méthode de sécurit
   app.use(bodyParser.json());//définit la fontion json comme middleware global pour l'application
 
   app.use('/api/sauces', saucesRoutes);
-
+  app.use('/api/auth', userRoutes);
 
 
 
