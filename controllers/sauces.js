@@ -1,40 +1,44 @@
 const thing = require("../models/thing");
+const fs = require("fs") //= fire System 
 
 exports.createThing = (req, res, next) =>{
-    (req, res, next) =>{ //Pour traîter la requête post
-        delete req.body._id;//Retire le champs ID avant de la crétion de l'objet
-        const thing = new Thing({
-          ...req.body
-        })
+  const thingObject = JSON.parse(req.body.thing);
+  delete thingObject._id;
+  const thing = new Thing({
+    ...thingObject,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  });
         thing.save()
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
-    }
-}
+    };
+
 exports.modifyThing = (req, res, next) =>{
     //pour modifier un objet
+    const thingObject = req.file ?
+    {
+      ...JSON.parse(req.body.thing),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : {...req.body};
         thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
           .then(() => res.status(200).json({ message: 'Objet modifié !'}))
           .catch(error => res.status(400).json({ error }));
       }
       exports.deleteThing = (req, res, next) => {
-        Thing.deleteOne({_id: req.params.id}).then(
-          () => {
-            res.status(200).json({
-              message: 'Deleted!'
+        thing.findOne({ _id: req.params.id })
+          .then(thing => {
+            const filename = thing.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+              Thing.deleteOne({ _id: req.params.id })
+                .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+                .catch(error => res.status(400).json({ error }));
             });
-          }
-        ).catch(
-          (error) => {
-            res.status(400).json({
-              error: error
-            });
-          }
-        );
+          })
+          .catch(error => res.status(500).json({ error }));
       };
       
       exports.getAllSauces = (req, res, next) => {
-        Thing.find().then(
+        thing.find().then(
           (things) => {
             res.status(200).json(things);
           }
