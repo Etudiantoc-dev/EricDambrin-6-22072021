@@ -29,7 +29,7 @@ app.use((req, res, next) => {//Pour éviter l'erreur CORS = méthode de sécurit
 
   app.use('/api/sauces', saucesRoutes);
   app.use('/api/auth', userRoutes);
-
+  app.use('/', (req, res, next) => {res.send('hello')});
 
 
 module.exports = app;
