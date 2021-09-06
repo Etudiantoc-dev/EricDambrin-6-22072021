@@ -12,6 +12,7 @@ exports.createThing = (req, res, next) =>{
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
          // Erreur 404 ici!!
+        
     };
     exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
       thing.findOne({ _id: req.params.id })// Methode findO nepour trouver un seul objet
@@ -51,7 +52,7 @@ exports.modifyThing = (req, res, next) =>{
           .then(thing => {
             const filename = thing.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
-              Thing.deleteOne({ _id: req.params.id })
+              thing.deleteOne({ _id: req.params.id })
                 .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
                 .catch(error => res.status(400).json({ error }));
             });
