@@ -1,7 +1,7 @@
 // Programme pour écouter une requète HTTP et y répondre : 
 
-const http = require('http');
-const app = require('./app');
+const http = require('http'); // Pour importer le package http de Node
+const app = require('./app'); // importation de app.js
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -38,7 +38,7 @@ const errorHandler = error => {
   }
 };
 
-const server = http.createServer(app);
+const server = http.createServer(app); // création du server de http
 
 server.on('error', errorHandler);
 server.on('listening', () => {

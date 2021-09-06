@@ -1,4 +1,4 @@
-const Thing = require("../models/thing");
+const Thing = require("../models/sauce");
 const fs = require("fs") //= fire System 
 
 exports.createThing = (req, res, next) =>{
@@ -11,6 +11,27 @@ exports.createThing = (req, res, next) =>{
         thing.save()
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
+         // Erreur 404 ici!!
+    };
+    exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
+      thing.findOne({ _id: req.params.id })// Methode findO nepour trouver un seul objet
+        .then(thing => res.status(200).json(thing))//reponse
+        .catch(error => res.status(404).json({ error }));//si erreur
+    }
+         
+    exports.getAllSauces = (req, res, next) => {
+      thing.find().then(
+        (things) => {
+          res.status(200).json(things);
+        }
+      ).catch(
+        (error) => {
+          res.status(400).json({
+            error: error
+            
+          }); 
+        }
+      );
     };
 
 exports.modifyThing = (req, res, next) =>{
@@ -23,6 +44,7 @@ exports.modifyThing = (req, res, next) =>{
         thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
           .then(() => res.status(200).json({ message: 'Objet modifié !'}))
           .catch(error => res.status(400).json({ error }));
+          
       }
       exports.deleteThing = (req, res, next) => {
         thing.findOne({ _id: req.params.id })
@@ -35,23 +57,8 @@ exports.modifyThing = (req, res, next) =>{
             });
           })
           .catch(error => res.status(500).json({ error }));
+          
       };
+ 
       
-      exports.getAllSauces = (req, res, next) => {
-        thing.find().then(
-          (things) => {
-            res.status(200).json(things);
-          }
-        ).catch(
-          (error) => {
-            res.status(400).json({
-              error: error
-            });
-          }
-        );
-      };
-      exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
-        thing.findOne({ _id: req.params.id })// Methode findO nepour trouver un seul objet
-          .then(thing => res.status(200).json(thing))//reponse
-          .catch(error => res.status(404).json({ error }));//si erreur
-      }
+

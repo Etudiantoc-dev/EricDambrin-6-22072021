@@ -1,14 +1,14 @@
-const express = require('express');
+const express = require('express'); // Importation du framework Express
 // const bodyParser = require('body-parser');// Pour gérer la demande post en important bodyParser ici
 const mongoose = require('mongoose');
 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 const path = require('path');
-const app = express();
+const app = express(); //Création de l'application express
 
 
-mongoose.connect('mongodb+srv://Eric:Dbmongoose@cluster0.1da6l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Eric:hn9QMQhqkpxJBuiP@cluster0.8bgsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -32,4 +32,7 @@ app.use((req, res, next) => {//Pour éviter l'erreur CORS = méthode de sécurit
   app.use('/', (req, res, next) => {res.send('hello')});
 
 
-module.exports = app;
+module.exports = app; //Exportation de l'application pour y accéder avec le server node ici
+
+
+
