@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
+;
 
 const sauceShema = mongoose.Schema({
     _id:{type: String, required: true }, //Mettre ou pas??
@@ -12,8 +13,8 @@ const sauceShema = mongoose.Schema({
     heat: { type: Number, required: true },
     likes: { type: Number, required: true },
     dislikes: { type: Number, required: true },
-    usersLiked: { type: String, required: true }, // sous forme de tableau
-    usersDisliked: { type: String, required: true },// sous forme de tableau
+    usersLiked: { type: Array, 'default' : [] }, // sous forme de tableau
+    usersDisliked: { type: Array, 'default' : [] },// sous forme de tableau
 });
 
 module.exports = mongoose.model('sauce', sauceShema); // Base qui va Servir à implémentater l'enregistrement de nouveaux objets dans la base de donné 
