@@ -1,4 +1,4 @@
-const multer = require('multer');
+const multer = require('multer'); // Permet de charger une/des images sur l'application
 
 const MIME_TYPES = {
   'image/jpg': 'jpg',

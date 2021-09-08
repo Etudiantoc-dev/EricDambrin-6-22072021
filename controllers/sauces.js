@@ -2,10 +2,10 @@ const fs = require("fs"); //= fire System
 const sauce = require("../models/sauce");
 
 exports.createSauce = (req, res, next) =>{
-  const thingObject = JSON.parse(req.body.sauce);
-  delete thingObject._id;
+  const sauceObject = JSON.parse(req.body.sauce);
+  delete sauceObject._id;
   const sauce = new Sauce({
-    ...thingObject,
+    ...sauceObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
         sauce.save()
@@ -15,13 +15,14 @@ exports.createSauce = (req, res, next) =>{
         
     };
     exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
-      sauce.findOne({ _id: req.params.id })// Methode findO nepour trouver un seul objet
+      sauce.findOne({ _id: req.params.id })// Methode findOne pour trouver un seul objet
         .then(sauce => res.status(200).json(sauce))//reponse
         .catch(error => res.status(404).json({ error }));//si erreur
     }
          
     exports.getAllSauces = (req, res, next) => {
-      sauce.find().then(
+      sauce.find()
+      .then(
         (sauces) => {
           res.status(200).json(sauces);
         }
@@ -37,12 +38,12 @@ exports.createSauce = (req, res, next) =>{
 
 exports.modifySauce = (req, res, next) =>{
     //pour modifier un objet
-     thingObject = req.file ? // J'ai enlevé let = devant thingObject??
+     const sauceObject = req.file ? 
     {
-      ...JSON.parse(req.body.thing),
+      ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...req.body};
-        sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+        sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
           .then(() => res.status(200).json({ message: 'Objet modifié !'}))
           .catch(error => res.status(400).json({ error }));
           
@@ -61,7 +62,8 @@ exports.modifySauce = (req, res, next) =>{
           
       };
       exports.likeSauce = (req, res, next) =>{
-        Sauce.findOne({ _id: sauceId })
+        sauce.findOne({ _id: req.params.id })
+       
       }
     
       
