@@ -11,14 +11,17 @@ exports.createSauce = (req, res, next) =>{
         sauce.save()
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
-         // Erreur 404 ici!!
+         // Erreur 404 ou status 200 ici??
+         //Est-ce que je dois mettre des next()??
         
     };
     exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
       sauce.findOne({ _id: req.params.id })// Methode findOne pour trouver un seul objet
         .then(sauce => res.status(200).json(sauce))//reponse
         .catch(error => res.status(404).json({ error }));//si erreur
+        
     }
+    
          
     exports.getAllSauces = (req, res, next) => {
       sauce.find()

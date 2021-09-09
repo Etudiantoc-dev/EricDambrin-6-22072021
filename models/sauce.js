@@ -11,10 +11,10 @@ const sauceShema = mongoose.Schema({
     mainPepper: { type: String, required: true },
     imageUrl: { type: String, required: true },
     heat: { type: Number, required: true },
-    likes: { type: Number, required: true },
-    dislikes: { type: Number, required: true },
-    usersLiked: { type: Array, 'default' : [] }, // sous forme de tableau
-    usersDisliked: { type: Array, 'default' : [] },// sous forme de tableau
+    likes: { type: Number, default : 0 },
+    dislikes: { type: Number, default : 0},
+    usersLiked: { type: String, default : [] }, // sous forme de tableau
+    usersDisliked: { type: String, default : [] },// sous forme de tableau
 });
 
-module.exports = mongoose.model('sauce', sauceShema); // Base qui va Servir à implémentater l'enregistrement de nouveaux objets dans la base de donné 
+module.exports = mongoose.model('sauce', sauceShema); // Base qui va Servir à implémenter l'enregistrement de nouveaux objets dans la base de donné 

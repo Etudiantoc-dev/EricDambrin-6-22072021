@@ -6,7 +6,7 @@ const saucesCtrl = require ('../controllers/sauces');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer.config');
 
-router.post('../models/sauce', auth, multer, saucesCtrl.createSauce);//Création //status 200 si cible précise; Status 400 avec'/'
+router.post('/sauce', auth, multer, saucesCtrl.createSauce);//Création //status 200 si cible précise; Status 400 avec'/'
 router.get('/:id', auth, saucesCtrl.getOneSauce);//renvoie la sauce avec l'ID fourni
 router.get('/', auth, saucesCtrl.getAllSauces);//renvoie le tableau de toutes les sauces
 router.put('/:id', auth, multer, saucesCtrl.modifySauce); // Modification
