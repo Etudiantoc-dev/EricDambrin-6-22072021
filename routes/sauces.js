@@ -11,7 +11,7 @@ router.get('/:id', auth, saucesCtrl.getOneSauce);//renvoie la sauce avec l'ID fo
 router.get('/', auth, saucesCtrl.getAllSauces);//renvoie le tableau de toutes les sauces
 router.put('/:id', auth, multer, saucesCtrl.modifySauce); // Modification
 router.delete('/:id', auth, saucesCtrl.deleteSauce);//suppression
-// router.post('/:id/like', auth, sauceCtrl.likeSauce);
+router.post('/:id/like', auth, saucesCtrl.likeSauce);
 
 
 module.exports = router;

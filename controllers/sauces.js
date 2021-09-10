@@ -1,13 +1,14 @@
 const fs = require("fs"); //= fire System 
 const Sauce = require("../models/sauce");
+const User = require('../models/user');
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   // delete sauceObject._id;
   const sauce = new Sauce({
-    ...sauceObject,
+    ...sauceObject, //Spread = raccourci pour accéder au corp (shéma sauce ici) de la requète et évite de tout énumérer
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    
+
   });
   sauce.save()
     .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
@@ -25,7 +26,7 @@ exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
 
 
 exports.getAllSauces = (req, res, next) => {
-  Sauce.find()
+  Sauce.find() // Pour récupérer toutes les sauces enregistrés dans la base de donné
     .then(
       (sauces) => {
         res.status(200).json(sauces);
@@ -42,12 +43,12 @@ exports.getAllSauces = (req, res, next) => {
 
 exports.modifySauce = (req, res, next) => {
   //pour modifier un objet
-  const sauceObject = req.file ?
+  const sauceObject = req.file ?  //Revoir ici le pourquoi de cette variable ternaire???
     {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })//Méthode pour modifier la sauce
     .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch(error => res.status(400).json({ error }));
 
@@ -65,8 +66,40 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 
 };
-exports.likeSauce = (req, res, next) => {
-  Sauce.findOne({ _id: req.params.id })
+
+exports.likeSauce = (req, res) => {// Appel des likes
+
+  Sauce.findOne({ _id: req.params.id }) //Identification de la sauce à liker + Id correspondant
+    .then(sauce => {
+      if (req.body.like == 1) {
+        sauce.likes++; // ajout du like
+        sauce.usersLiked.push(req.body.userId); //ajout de l'utilisateur qui like
+        sauce.save();//enregistrement dans la base de donnée
+      }
+        if (req.body.dislikes == -1) {
+          sauce.dislikes++; 
+          sauce.usersDisliked.push(req.body.userId); 
+          sauce.save();
+      
+        
+     
+      }
+      if(req.body.like == 0){
+        
+      }
+     
+      
+
+    }
+    
+    
+    )
+   
+    
+
+
+    // .then(() => res.status(200).json({ message: 'Objet avisé !' }))
+    // .catch(error => res.status(400).json({ error }));
 
 }
 
