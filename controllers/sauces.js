@@ -76,30 +76,55 @@ exports.likeSauce = (req, res) => {// Appel des likes
         sauce.usersLiked.push(req.body.userId); //ajout de l'utilisateur qui like
         sauce.save();//enregistrement dans la base de donnée
       }
-        if (req.body.dislikes == -1) {
-          sauce.dislikes++; 
-          sauce.usersDisliked.push(req.body.userId); 
-          sauce.save();
-      
-        
-     
+      else { (req.body.like == -1) 
+        sauce.dislikes++;
+        sauce.usersDisliked.push(req.body.userId);
+        sauce.save();
       }
-      if(req.body.like == 0){
-        
-      }
-     
-      
 
+
+
+
+
+      
+      // if (req.body.like == 0) {
+      //   sauce.likes--;
+      //   sauce.usersLiked.splice(-1, req.body.userId, 0);//dernier élément du tableau, élément en question, suppression
+      //   sauce.save()
+      //   console.log(req.body.userId);
+
+
+
+
+      // } if (req.body.like == 0) {
+      //   sauce.dislikes--;
+      //   sauce.usersDisliked.splice(-1, req.body.userId, 0);
+      //   sauce.save()
+
+
+      // }
+
+
+
+      res.status(200).json({ message: 'avis annulé!' })
     }
-    
-    
-    )
-   
-    
 
 
-    // .then(() => res.status(200).json({ message: 'Objet avisé !' }))
-    // .catch(error => res.status(400).json({ error }));
+
+
+    ).catch((error => res.status(500).json({ error }))
+
+
+
+
+    );
+
+
+
+
+
+  // .then(() => res.status(200).json({ message: 'Objet avisé !' }))
+  // .catch(error => res.status(400).json({ error }));
 
 }
 
