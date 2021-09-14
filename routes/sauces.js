@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();//methode routeur d'express pour faire router.post au lieu de add.post par exemple
 
 // const Thing = require ('../models/sauce');
-const saucesCtrl = require ('../controllers/sauces');
+const saucesCtrl = require('../controllers/sauces');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer.config');
 
