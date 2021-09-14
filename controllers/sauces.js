@@ -93,7 +93,7 @@ exports.likeSauce = (req, res) => {// Appel des likes
       if (req.body.like == 0) {
         if (sauce.usersLiked.indexOf(req.body.userId) > -1) {
           sauce.likes--;
-          sauce.usersLiked.splice(req.body.userId);//dernier élément du tableau, élément en question, suppression
+          sauce.usersLiked.splice(req.body.userId);// suppression de l'utilisateur du tableau
           sauce.save()
         }
         else if (sauce.usersDisliked.indexOf(req.body.userId) > -1) {
