@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt'); // package bcript installé
+const bcrypt = require('bcrypt'); // package bcript(Algorithme de chiffrement) installé
 const jwt = require('jsonwebtoken');//permet à l'utilisateur de se connecter qu'une seule fois au compte
 
 const User = require('../models/user');

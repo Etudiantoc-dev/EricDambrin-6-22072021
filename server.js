@@ -1,6 +1,7 @@
 // Programme pour écouter une requète HTTP et y répondre : 
 
-const http = require('http'); // Pour importer le package http de Node
+const http = require('http'); // Pour importer le package http de Node et l'utiliser pour créer un serveur
+// On peut le mettre en HTTPS pour la sécuritée des données en transit
 const app = require('./app'); // importation de app.js
 
 const normalizePort = val => {
@@ -10,17 +11,17 @@ const normalizePort = val => {
     return val;
   }
   if (port >= 0) {
-    return port;
+    return port;                        // Cela renvoit un port valide qu'il soit sous forme de chaine ou numéro
   }
   return false;
 };
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000'); //Port par défaut si le port 3000 n'est pas disponible
 app.set('port', port);
 
 const errorHandler = error => {
-  if (error.syscall !== 'listen') {
-    throw error;
+  if (error.syscall !== 'listen') {           // Recherche les différentes erreurs et les gères de manière appropriée
+    throw error;                              // + un écouteur pour consigner le port ou le canal nommé sur lequel le serveur s'éxécute dans la console
   }
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;

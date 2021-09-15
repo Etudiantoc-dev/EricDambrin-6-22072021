@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uniquevalidator = require('mongoose-unique-validator');
+const uniquevalidator = require('mongoose-unique-validator');// Pour que l'utilisateur ne puisse s'enregistrer qu'avec une seule adresse
 
 const userShema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
