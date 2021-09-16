@@ -1,6 +1,6 @@
 const fs = require("fs"); //= fire System 
 const Sauce = require("../models/sauce");
-const User = require('../models/user');
+// const User = require('../models/user');
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
