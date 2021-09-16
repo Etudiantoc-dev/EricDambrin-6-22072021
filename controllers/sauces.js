@@ -4,7 +4,7 @@ const Sauce = require("../models/sauce");
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
-  // delete sauceObject._id;
+  // delete sauceObject._id; Pourquoi je ne suis pas obligé de le mettre???
   const sauce = new Sauce({
     ...sauceObject, //Spread = raccourci pour accéder au corp (shéma sauce ici) de la requète et évite de tout énumérer
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -23,8 +23,6 @@ exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
     .catch(error => res.status(404).json({ error }));//si erreur
 
 }
-
-
 exports.getAllSauces = (req, res, next) => {
   Sauce.find() // Pour récupérer toutes les sauces enregistrés dans la base de donné
     .then(
@@ -40,7 +38,6 @@ exports.getAllSauces = (req, res, next) => {
       }
     );
 };
-
 exports.modifySauce = (req, res, next) => {
   //pour modifier un objet
   const sauceObject = req.file ?  //Revoir ici le pourquoi de cette variable ternaire???
@@ -66,9 +63,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 
 };
-
 exports.likeSauce = (req, res) => {// Appel des likes
-
   Sauce.findOne({ _id: req.params.id }) //Identification de la sauce à liker + Id correspondant
     .then(sauce => {
       if (req.body.like == 1 && sauce.usersLiked.indexOf(req.body.userId) === -1) {
@@ -96,7 +91,7 @@ exports.likeSauce = (req, res) => {// Appel des likes
         sauce.usersDisliked.splice(req.body.userId);
         sauce.save()
       }
-      
+
       res.status(200).json({ message: 'avis annulé!' })
     }
 

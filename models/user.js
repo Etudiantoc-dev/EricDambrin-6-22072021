@@ -8,4 +8,4 @@ const userShema = mongoose.Schema({
 
 userShema.plugin(uniquevalidator);
 
-module.exports = mongoose.model('User', userShema);
+module.exports = mongoose.model('User', userShema);// exporte et rend le shéma disponible pour l'application Express

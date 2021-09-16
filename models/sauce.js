@@ -17,4 +17,4 @@ const sauceShema = mongoose.Schema({
     usersDisliked: { type: [String], default: [] },// sous forme de tableau
 });
 
-module.exports = mongoose.model('sauce', sauceShema); // Base qui va servir à implémenter l'enregistrement de nouveaux objets dans la base de donné 
+module.exports = mongoose.model('sauce', sauceShema); // // export et rend le shéma disponible pour l'application Express

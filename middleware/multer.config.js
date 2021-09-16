@@ -1,6 +1,6 @@
-const multer = require('multer'); // Permet de charger une/des images sur l'application
+const multer = require('multer'); // Permet de charger des fichiers entrant sur l'application
 
-const MIME_TYPES = {
+const MIME_TYPES = { // Formats autorisés
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
   'image/png': 'png'

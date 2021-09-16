@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt'); // package bcript(Algorithme de chiffrement) installé
-const jwt = require('jsonwebtoken');//permet à l'utilisateur de se connecter qu'une seule fois au compte
-
+const jwt = require('jsonwebtoken');// Identificateur de Session, code perso généré pour être reconnu sur l'application pendant un temps donné..
+// Ainsi agir sur l'application sans que nos actions soient modifiable par un autre
 const User = require('../models/user');
 
 exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer les utilisateurs crypte le mot de passe avec lequel cré le nouveau utilisateur avec son adresse email
@@ -19,9 +19,8 @@ exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer 
     })
     .catch(error => res.status(500).json({ error }));
 };
-
 exports.login = (req, res, next) => { // Permet aux utilisateur existant de se connecter(vérification des informations)
-  User.findOne({ email: req.body.email })//Méthode FindOne pour trouver un seul utilisateur
+  User.findOne({ email: req.body.email })//Vérification si email inscrit correspond à un utilisateur existant
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -31,7 +30,7 @@ exports.login = (req, res, next) => { // Permet aux utilisateur existant de se c
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
-          res.status(200).json({
+          res.status(200).json({ // Requète réussit
             userId: user._id,
             token: jwt.sign(
               { userId: user._id },
