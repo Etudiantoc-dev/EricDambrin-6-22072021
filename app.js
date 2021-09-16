@@ -1,5 +1,4 @@
 const express = require('express'); // Importation du framework Express
-// const bodyParser = require('body-parser');// Pour gérer la demande post en important bodyParser ici
 const mongoose = require('mongoose');
 
 const saucesRoutes = require('./routes/sauces');
@@ -24,7 +23,7 @@ app.use((req, res, next) => {//Pour éviter l'erreur CORS = méthode de sécurit
   next();
 });
 
-// app.use(bodyParser.json());// rend les données du corps de la requète exploitable
+
 app.use(express.json());//définit la fonction json comme middleware global pour l'application
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
