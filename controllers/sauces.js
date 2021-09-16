@@ -71,43 +71,36 @@ exports.likeSauce = (req, res) => {// Appel des likes
 
   Sauce.findOne({ _id: req.params.id }) //Identification de la sauce à liker + Id correspondant
     .then(sauce => {
-      if (req.body.like == 1) {
-        if (sauce.usersLiked.indexOf(req.body.userId) === -1) {
-          sauce.likes++; // ajout du like
-          sauce.usersLiked.push(req.body.userId); //ajout de l'utilisateur qui like
-          sauce.save();//enregistrement dans la base de donnée
-        }
+      if (req.body.like == 1 && sauce.usersLiked.indexOf(req.body.userId) === -1) {
 
-
-
-      } if (req.body.like == -1) {
-        if (sauce.usersDisliked.indexOf(req.body.userId) === -1) {
-          sauce.dislikes++;
-          sauce.usersDisliked.push(req.body.userId);
-          sauce.save();
-        }
-
-
+        sauce.likes++; // ajout du like
+        sauce.usersLiked.push(req.body.userId); //ajout de l'utilisateur qui like
+        sauce.save();//enregistrement dans la base de donnée
       }
 
-      if (req.body.like == 0) {
-        if (sauce.usersLiked.indexOf(req.body.userId) > -1) {
-          sauce.likes--;
-          sauce.usersLiked.splice(req.body.userId);// suppression de l'utilisateur du tableau
-          sauce.save()
-        }
-        else if (sauce.usersDisliked.indexOf(req.body.userId) > -1) {
-          sauce.dislikes--;
-          sauce.usersDisliked.splice(req.body.userId);
-          sauce.save()
-        }
+      if (req.body.like == -1 && sauce.usersDisliked.indexOf(req.body.userId) === -1) {
+
+        sauce.dislikes++;
+        sauce.usersDisliked.push(req.body.userId);
+        sauce.save();
       }
 
+      if (req.body.like == 0 && sauce.usersLiked.indexOf(req.body.userId) > -1) {
+        sauce.likes--; //Suppression du like
+        sauce.usersLiked.splice(req.body.userId);// suppression de l'utilisateur du tableau
+        sauce.save()
+      }
+
+      if (req.body.like == 0 && sauce.usersDisliked.indexOf(req.body.userId) > -1) {
+        sauce.dislikes--;//Suppression du dislike
+        sauce.usersDisliked.splice(req.body.userId);
+        sauce.save()
+      }
+      
       res.status(200).json({ message: 'avis annulé!' })
     }
 
-    ).catch((error => res.status(500).json({ error }))
-    );
+    ).catch((error => res.status(500).json({ error })));
 
 
 }
