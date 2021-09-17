@@ -2,22 +2,43 @@ const bcrypt = require('bcrypt'); // package bcript(Algorithme de chiffrement) i
 const jwt = require('jsonwebtoken');// Identificateur de Session, code perso généré pour être reconnu sur l'application pendant un temps donné..
 // Ainsi agir sur l'application sans que nos actions soient modifiable par un autre
 const User = require('../models/user');
+const MaskData = require('maskdata');
+const  emailMask2Options  =  { 
+  maskWith : "*" ,  
+  unmaskedStartCharactersBeforeAt : 3 , 
+  unmaskedEndCharactersAfterAt : 2 , 
+  maskAtTheRate : false
+} ; 
 
 exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer les utilisateurs crypte le mot de passe avec lequel cré le nouveau utilisateur avec son adresse email
   console.log(req.body);
+  const  maskedEmail  =  MaskData . maskEmail2 ( req.body.email,  emailMask2Options ) ; 
+  console.log(maskedEmail)
   bcrypt.hash(req.body.password, 10) //hash avec argument mot de passe et le nombre d'algorythme de hashage et  créé par bcrypt pour enregistrer le user dans la base de donné par la suite
-    .then(hash => { // Asynchrone donc création des .then et .catch
-      console.log(hash);
-      const user = new User({ // ce qui est requis pour l'inscription d'un utilisateur
-        email: req.body.email,
-        password: hash //mot de passe crypté
-      });
-      console.log(user);
-      user.save()// pour enregistrer dans la base de donnée
+    .then(maskedEmail => {
+        const user = new MaskData({
+          email : maskedEmail
+         
+        });
+        user.save()// pour enregistrer dans la base de donnée
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
         .catch(error => res.status(400).json({ error }));
+    
     })
-    .catch(error => res.status(500).json({ error }));
+      .catch(error => res.status(500).json({ error }));
+
+    // .then( hash => { // Asynchrone donc création des .then et .catch
+    //   console.log(hash);
+    //   const user = new User({ // ce qui est requis pour l'inscription d'un utilisateur
+    //     email: maskedEmail ,
+    //     password: hash //mot de passe crypté
+    //   });
+    //   console.log(user);
+    //   user.save()// pour enregistrer dans la base de donnée
+    //     .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+    //     .catch(error => res.status(400).json({ error }));
+    // })
+    // .catch(error => res.status(500).json({ error }));
 };
 exports.login = (req, res, next) => { // Permet aux utilisateur existant de se connecter(vérification des informations)
   User.findOne({ email: req.body.email })//Vérification si email inscrit correspond à un utilisateur existant

@@ -4,6 +4,7 @@ const http = require('http'); // Pour importer le package http de Node et l'util
 // On peut le mettre en HTTPS pour la sécuritée des données en transit
 const app = require('./app'); // importation de app.js
 
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
 

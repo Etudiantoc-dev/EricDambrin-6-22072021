@@ -1,11 +1,15 @@
 const express = require('express'); // Importation du framework Express
+const helmet = require("helmet");
 const mongoose = require('mongoose');
-
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 const path = require('path');
 const app = express(); //Création de l'application express
-
+const  rateLimit  =  require ( "express-rate-limit" ) ; 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
 
 mongoose.connect('mongodb+srv://Eric:hn9QMQhqkpxJBuiP@cluster0.8bgsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   {
@@ -30,9 +34,12 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/', (req, res, next) => { res.send('hello') });
-
+app.use(helmet());
+app.use(rateLimit());
+app.use(limiter);
 
 module.exports = app; //Exportation de l'application pour y accéder avec le server node ici
+
 
 
 
