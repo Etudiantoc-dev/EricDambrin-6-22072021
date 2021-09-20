@@ -11,6 +11,7 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 });
 
+
 mongoose.connect('mongodb+srv://Eric:hn9QMQhqkpxJBuiP@cluster0.8bgsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
@@ -37,6 +38,7 @@ app.use('/', (req, res, next) => { res.send('hello') });
 app.use(helmet());
 app.use(rateLimit());
 app.use(limiter);
+
 
 module.exports = app; //Exportation de l'application pour y accéder avec le server node ici
 

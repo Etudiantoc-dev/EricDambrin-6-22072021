@@ -5,40 +5,35 @@ const User = require('../models/user');
 const MaskData = require('maskdata');
 const  emailMask2Options  =  { 
   maskWith : "*" ,  
-  unmaskedStartCharactersBeforeAt : 3 , 
+  unmaskedStartCharactersBeforeAt : 1 , 
   unmaskedEndCharactersAfterAt : 2 , 
   maskAtTheRate : false
 } ; 
+// const crypto = require('crypto.js');
+
+
+
+ 
 
 exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer les utilisateurs crypte le mot de passe avec lequel cré le nouveau utilisateur avec son adresse email
   console.log(req.body);
-  const  maskedEmail  =  MaskData . maskEmail2 ( req.body.email,  emailMask2Options ) ; 
-  console.log(maskedEmail)
+  const maskedEmail = MaskData.maskEmail2( req.body.email, emailMask2Options ) ; 
+  // const encrypted = crypto.hash.toString(req.body.email)
+  // console.log(maskedEmail)
   bcrypt.hash(req.body.password, 10) //hash avec argument mot de passe et le nombre d'algorythme de hashage et  créé par bcrypt pour enregistrer le user dans la base de donné par la suite
-    .then(maskedEmail => {
-        const user = new MaskData({
-          email : maskedEmail
-         
-        });
-        user.save()// pour enregistrer dans la base de donnée
+  
+       .then( hash => { // Asynchrone donc création des .then et .catch
+      console.log(hash);
+      const user = new User({ // ce qui est requis pour l'inscription d'un utilisateur
+        email: maskedEmail,
+        password: hash //mot de passe crypté
+      });
+      console.log(user);
+      user.save()// pour enregistrer dans la base de donnée
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
         .catch(error => res.status(400).json({ error }));
-    
     })
-      .catch(error => res.status(500).json({ error }));
-
-    // .then( hash => { // Asynchrone donc création des .then et .catch
-    //   console.log(hash);
-    //   const user = new User({ // ce qui est requis pour l'inscription d'un utilisateur
-    //     email: maskedEmail ,
-    //     password: hash //mot de passe crypté
-    //   });
-    //   console.log(user);
-    //   user.save()// pour enregistrer dans la base de donnée
-    //     .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-    //     .catch(error => res.status(400).json({ error }));
-    // })
-    // .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };
 exports.login = (req, res, next) => { // Permet aux utilisateur existant de se connecter(vérification des informations)
   User.findOne({ email: req.body.email })//Vérification si email inscrit correspond à un utilisateur existant
