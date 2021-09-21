@@ -54,7 +54,7 @@ exports.login = (req, res, next) => { // Permet aux utilisateur existant de se c
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
-          res.status(200).json({ // Requète réussit
+          res.status(200).json({ // Requète réussi
             userId: user._id,
             token: jwt.sign(
               { userId: user._id },

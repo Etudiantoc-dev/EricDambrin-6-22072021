@@ -13,8 +13,8 @@ const sauceShema = mongoose.Schema({
     heat: { type: Number, required: true },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0 },
-    usersLiked: { type: [String], default: [] }, // sous forme de tableau
-    usersDisliked: { type: [String], default: [] },// sous forme de tableau
+    usersLiked: { type: [String], default: [] }, 
+    usersDisliked: { type: [String], default: [] },
 });
 
 module.exports = mongoose.model('sauce', sauceShema); // // export et rend le shéma disponible pour l'application Express
