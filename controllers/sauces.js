@@ -1,10 +1,9 @@
 const fs = require("fs"); //= fire System 
 const Sauce = require("../models/sauce");
-// const User = require('../models/user');
+
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
-  // delete sauceObject._id; Pourquoi je ne suis pas obligé de le mettre???
   const sauce = new Sauce({
     ...sauceObject, //Spread = raccourci pour accéder au corp (shéma sauce ici) de la requète et évite de tout énumérer
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -13,9 +12,7 @@ exports.createSauce = (req, res, next) => {
   sauce.save()
     .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
     .catch(error => res.status(400).json({ error }));
-  // Erreur 404 ou status 200 ici??
-  //Est-ce que je dois mettre des next()??
-
+  
 };
 exports.getOneSauce = (req, res, next) => {//récupération d'un Objet
   Sauce.findOne({ _id: req.params.id })// Methode findOne pour trouver un seul objet

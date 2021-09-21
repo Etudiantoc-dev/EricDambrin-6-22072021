@@ -29,7 +29,7 @@ app.use((req, res, next) => {//Pour éviter l'erreur CORS = méthode de sécurit
 });
 
 
-app.use(express.json());//définit la fonction json comme middleware global pour l'application
+app.use(express.json());//définit le format json pour le middleware global pour l'application
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
