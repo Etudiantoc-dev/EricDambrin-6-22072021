@@ -1,4 +1,4 @@
-const express = require('express'); // Importation du framework Express
+const express = require('express'); // = Série de fonctions Middleware() et Router pour la lisibilitée du code
 const helmet = require("helmet");
 const mongoose = require('mongoose');
 const saucesRoutes = require('./routes/sauces');
@@ -35,8 +35,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/', (req, res, next) => { res.send('hello') });
-app.use(helmet());
-app.use(rateLimit());
+app.use(helmet()); // Sécurité (11 library internes de sécurités connues)
+app.use(rateLimit());// Sécurité(limite le nombre de requête vers un server express)
 app.use(limiter);
 
 

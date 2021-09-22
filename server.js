@@ -1,9 +1,7 @@
 // Programme pour écouter une requète HTTP et y répondre : 
 
 const http = require('http'); // Pour importer le package http de Node et l'utiliser pour créer un serveur
-// On peut le mettre en HTTPS pour la sécuritée des données en transit
 const app = require('./app'); // importation de app.js
-
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -18,7 +16,7 @@ const normalizePort = val => {
 };
 
 const port = normalizePort(process.env.PORT || '3000'); //Port par défaut si le port 3000 n'est pas disponible
-app.set('port', port);
+app.set('port', port); //Pour dire à l'application sur quel port elle va tourner
 
 const errorHandler = error => {
   if (error.syscall !== 'listen') {           // Recherche les différentes erreurs et les gères de manière appropriée
@@ -49,4 +47,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+server.listen(port); 
