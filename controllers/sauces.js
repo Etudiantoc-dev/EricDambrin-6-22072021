@@ -41,7 +41,7 @@ exports.modifySauce = (req, res, next) => {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })//Méthode pour modifier la sauce
+  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })// 1er argument(quel objet on modifie) 2eme argument(nouvelle version de l'objet)
     .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch(error => res.status(400).json({ error }));
 
