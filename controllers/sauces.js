@@ -36,8 +36,7 @@ exports.getAllSauces = (req, res, next) => {
     );
 };
 exports.modifySauce = (req, res, next) => {
-  //pour modifier un objet
-  const sauceObject = req.file ?  //Revoir ici le pourquoi de cette variable ternaire???
+  const sauceObject = req.file ?  
     {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`

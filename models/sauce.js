@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
-;
+
 
 const sauceShema = mongoose.Schema({
     // _id:{type: String, required: true }, //Mettre ou pas??

@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt'); // package bcript(Algorithme de chiffrement) installé
-console.log(bcrypt)
 const jwt = require('jsonwebtoken');// Identificateur de Session, code perso généré pour être reconnu sur l'application pendant un temps donné..
 const User = require('../models/user');
 
