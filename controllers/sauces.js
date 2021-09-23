@@ -1,4 +1,4 @@
-const fs = require("fs"); //= fire System 
+const fs = require("fs"); //= file System 
 const Sauce = require("../models/sauce");
 
 
