@@ -9,6 +9,6 @@
 
     Démarrage Backend :
 
- .Chargez le package nodemon : npm install -g nodemon.
+ .Charger le package nodemon : npm install -g nodemon.
  .lancez le serveur: nodemon server.
- .Mise à jour automatique quand on change le code grace à nodemon.
+ .Mise à jour automatique pendant le travail sur le code
