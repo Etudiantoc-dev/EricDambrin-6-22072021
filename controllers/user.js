@@ -10,7 +10,6 @@ exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer 
       const user = new User({ // ce qui est requis pour l'inscription d'un utilisateur
         email: req.body.email,
         password: hash//mot de passe crypté
-
       });
 
       console.log(user);
@@ -37,7 +36,6 @@ exports.login = (req, res, next) => { // Permet aux utilisateurs existant de se 
               { userId: user._id },
               'RANDOM_TOKEN_SECRET', // Clef secrete de l'encodage
               { expiresIn: '24h' } // L'ajout du TOKEN permet de sécuriser que la création d'un objet ne soit pas modifiable par un autre utilisateur
-
             )
           });
         })

@@ -1,5 +1,4 @@
 // Programme pour écouter une requète HTTP et y répondre : 
-
 const http = require('http'); // Pour importer le package http de Node et l'utiliser pour créer un serveur
 const app = require('./app'); // importation de app.js
 
@@ -47,4 +46,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port); 
+server.listen(port);

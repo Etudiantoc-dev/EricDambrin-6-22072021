@@ -7,5 +7,4 @@ const userShema = mongoose.Schema({ //Shéma de données pour l'inscription et l
 })
 
 userShema.plugin(uniquevalidator);
-
 module.exports = mongoose.model('User', userShema);// exporte et rend le shéma disponible pour l'application Express
