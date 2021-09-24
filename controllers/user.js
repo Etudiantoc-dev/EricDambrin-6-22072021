@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => { //Méthode s'inscrire //pour enregistrer 
     })
     .catch(error => res.status(500).json({ error }));
 };
-exports.login = (req, res, next) => { // Permet aux utilisateur existant de se connecter(vérification des informations)
+exports.login = (req, res, next) => { // Permet aux utilisateurs existant de se connecter(vérification des informations)
   User.findOne({ email: req.body.email })//Vérification si email inscrit correspond à un utilisateur existant
     .then(user => {
       if (!user) {
@@ -35,7 +35,7 @@ exports.login = (req, res, next) => { // Permet aux utilisateur existant de se c
             userId: user._id,
             token: jwt.sign(
               { userId: user._id },
-              'RANDOM_TOKEN_SECRET', // En production la chaîne serait de caractère plus complexe et longue
+              'RANDOM_TOKEN_SECRET', // Clef secrete de l'encodage
               { expiresIn: '24h' } // L'ajout du TOKEN permet de sécuriser que la création d'un objet ne soit pas modifiable par un autre utilisateur
 
             )
